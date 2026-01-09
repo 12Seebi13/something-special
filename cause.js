@@ -1,12 +1,72 @@
 const music = document.getElementById('bg-music');
+const musicToggleBtn = document.getElementById('music-toggle');
+const musicOverlay = document.getElementById('music-overlay');
+const musicOnBtn = document.getElementById('music-on');
+const musicOffBtn = document.getElementById('music-off');
 
-if (music) {
-    // Resume music if already playing
+// Disable page interaction initially
+document.body.style.overflow = 'hidden';
+
+// MUSIC ON
+musicOnBtn.addEventListener('click', () => {
+    music.volume = 0.6;
+    music.play().catch(() => {});
+    sessionStorage.setItem('bgMusicPlaying', 'true');
+
+    musicToggleBtn.textContent = '🔇 Pause Music';
+    closeMusicOverlay();
+});
+
+// MUSIC OFF
+musicOffBtn.addEventListener('click', () => {
+    sessionStorage.setItem('bgMusicPlaying', 'false');
+    musicToggleBtn.textContent = '🔊 Play Music';
+    closeMusicOverlay();
+});
+
+function closeMusicOverlay() {
+    gsap.to(musicOverlay, {
+        opacity: 0,
+        duration: 0.4,
+        onComplete: () => {
+            musicOverlay.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+if (musicToggleBtn && music) {
+
+    // Restore previous state
     if (sessionStorage.getItem('bgMusicPlaying') === 'true') {
         music.volume = 0.6;
         music.play().catch(() => {});
+        musicToggleBtn.textContent = '🔇 Pause Music';
     }
+
+    musicToggleBtn.addEventListener('click', () => {
+        if (music.paused) {
+            music.volume = 0.6;
+            music.play().then(() => {
+                sessionStorage.setItem('bgMusicPlaying', 'true');
+                musicToggleBtn.textContent = '🔇 Pause Music';
+            }).catch(() => {
+                console.log("Autoplay blocked");
+            });
+        } else {
+            music.pause();
+            sessionStorage.setItem('bgMusicPlaying', 'false');
+            musicToggleBtn.textContent = '🔊 Play Music';
+        }
+
+        // Button animation
+        gsap.fromTo(musicToggleBtn,
+            { scale: 0.9 },
+            { scale: 1, duration: 0.2 }
+        );
+    });
 }
+
 
 // Reasons database
  const reasons = [
