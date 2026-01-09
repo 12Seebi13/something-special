@@ -33,13 +33,30 @@
             <div class="ending-text">You're the BESTEST ! 💖</div>
         </div>
     </div>
-
-    <script src="cause.js">
-       
-    </script>
-    <audio id="bg-music" loop>
+    
+   <audio id="bg-music" loop>
     <source src="./hbd.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
 </audio>
+
+<button id="music-toggle" class="music-button">
+    🔊 Play Music
+</button>
+
+<!-- Music Choice Overlay -->
+<div id="music-overlay">
+    <div class="music-box">
+        <h2>🎵 Background Music</h2>
+        <p>Do you want to play music?</p>
+        <div class="music-actions">
+            <button id="music-on">🔊 Music ON</button>
+            <button id="music-off">🔇 Music OFF</button>
+        </div>
+    </div>
+</div>
+
+
+<script src="cause.js"></script>
+
+
 </body>
 </html>
